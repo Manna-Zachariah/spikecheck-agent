@@ -1,0 +1,229 @@
+{
+  "goal": "Lunch: a sandwich with 60 g white bread and 30 g cheddar cheese, plus a 150 g apple.",
+  "model": "qwen3:8b",
+  "stop_reason": "success",
+  "final_answer": "The meal has a high glycemic load of 26.6. Swapping white bread with chapati reduces the GL to 19.0, which is a 28.6% reduction. This swap is recommended.",
+  "verified_summary": "Meal glycemic load (calculated by Python):\n  - white bread, 60.0 g: carbs 27.6 g, GI 75.0, GL 20.7 (high)\n  - cheddar cheese, 30.0 g: carbs 0.3 g, GI none, GL 0.0 (low)\n  - apple, 150.0 g: carbs 16.5 g, GI 36.0, GL 5.9 (low)\n  TOTAL GL: 26.6\nSwap tested: white bread -> whole wheat bread (60.0 g): 26.6 -> 22.3, 16.2% lower, did not pass\nSwap tested: white bread -> chapati (60.0 g): 26.6 -> 19.0, 28.6% lower, PASSED\nNote: an estimate from a small food table, not a prediction of blood sugar.",
+  "steps_used": 5,
+  "trace": [
+    {
+      "step": 1,
+      "raw_reply": "{\"action\": \"calculate_gl\", \"argument\": {\"items\": [{\"food\": \"white bread\", \"grams\": 60}, {\"food\": \"cheddar cheese\", \"grams\": 30}, {\"food\": \"apple\", \"grams\": 150}]}}",
+      "action": "calculate_gl",
+      "argument": {
+        "items": [
+          {
+            "food": "white bread",
+            "grams": 60
+          },
+          {
+            "food": "cheddar cheese",
+            "grams": 30
+          },
+          {
+            "food": "apple",
+            "grams": 150
+          }
+        ]
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Meal glycemic load is 26.6.",
+        "data": {
+          "items": [
+            {
+              "food": "white bread",
+              "grams": 60.0,
+              "gi": 75.0,
+              "carbs_g": 27.6,
+              "gl": 20.7,
+              "rating": "high",
+              "note": ""
+            },
+            {
+              "food": "cheddar cheese",
+              "grams": 30.0,
+              "gi": null,
+              "carbs_g": 0.3,
+              "gl": 0.0,
+              "rating": "low",
+              "note": "No GI value: almost no carbohydrate, so GL is counted as 0."
+            },
+            {
+              "food": "apple",
+              "grams": 150.0,
+              "gi": 36.0,
+              "carbs_g": 16.5,
+              "gl": 5.9,
+              "rating": "low",
+              "note": ""
+            }
+          ],
+          "total_gl": 26.6,
+          "total_carbs_g": 44.4,
+          "problems": [],
+          "rating": "high"
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 2,
+      "raw_reply": "{\"action\": \"find_alternatives\", \"argument\": {\"food\": \"white bread\"}}",
+      "action": "find_alternatives",
+      "argument": {
+        "food": "white bread"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Found 3 lower-GI alternatives, closest first.",
+        "data": {
+          "food": "white bread",
+          "category": "bread",
+          "alternatives": [
+            {
+              "food": "whole wheat bread",
+              "gi": 74.0,
+              "carbs_per_100g": 37.0,
+              "serving_g": 60.0
+            },
+            {
+              "food": "chapati",
+              "gi": 52.0,
+              "carbs_per_100g": 42.0,
+              "serving_g": 60.0
+            },
+            {
+              "food": "corn tortilla",
+              "gi": 46.0,
+              "carbs_per_100g": 38.0,
+              "serving_g": 50.0
+            }
+          ]
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 3,
+      "raw_reply": "{\"action\": \"test_swap\", \"argument\": {\"items\": [{\"food\": \"white bread\", \"grams\": 60}, {\"food\": \"cheddar cheese\", \"grams\": 30}, {\"food\": \"apple\", \"grams\": 150}], \"replace\": \"white bread\", \"with\": \"whole wheat bread\"}}",
+      "action": "test_swap",
+      "argument": {
+        "items": [
+          {
+            "food": "white bread",
+            "grams": 60
+          },
+          {
+            "food": "cheddar cheese",
+            "grams": 30
+          },
+          {
+            "food": "apple",
+            "grams": 150
+          }
+        ],
+        "replace": "white bread",
+        "with": "whole wheat bread"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Swap did NOT reach the target: meal GL goes from 26.6 to 22.3 (16.2% lower, target 20%). Try another alternative.",
+        "data": {
+          "replace": "white bread",
+          "with": "whole wheat bread",
+          "with_grams": 60.0,
+          "grams_note": "Used the table serving size for whole wheat bread.",
+          "before_total_gl": 26.6,
+          "after_total_gl": 22.3,
+          "reduction": 4.3,
+          "reduction_percent": 16.2,
+          "target_percent": 20,
+          "passed": false,
+          "new_item_gl": 16.4,
+          "new_item_rating": "medium",
+          "new_item_is_low": false
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 4,
+      "raw_reply": "{\"action\": \"test_swap\", \"argument\": {\"items\": [{\"food\": \"white bread\", \"grams\": 60}, {\"food\": \"cheddar cheese\", \"grams\": 30}, {\"food\": \"apple\", \"grams\": 150}], \"replace\": \"white bread\", \"with\": \"chapati\"}}",
+      "action": "test_swap",
+      "argument": {
+        "items": [
+          {
+            "food": "white bread",
+            "grams": 60
+          },
+          {
+            "food": "cheddar cheese",
+            "grams": 30
+          },
+          {
+            "food": "apple",
+            "grams": 150
+          }
+        ],
+        "replace": "white bread",
+        "with": "chapati"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Swap PASSED: meal GL goes from 26.6 to 19.0 (28.6% lower, target 20%).",
+        "data": {
+          "replace": "white bread",
+          "with": "chapati",
+          "with_grams": 60.0,
+          "grams_note": "Used the table serving size for chapati.",
+          "before_total_gl": 26.6,
+          "after_total_gl": 19.0,
+          "reduction": 7.6,
+          "reduction_percent": 28.6,
+          "target_percent": 20,
+          "passed": true,
+          "new_item_gl": 13.1,
+          "new_item_rating": "medium",
+          "new_item_is_low": false
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 5,
+      "raw_reply": "{\"action\": \"done\", \"argument\": {\"status\": \"complete\", \"answer\": \"The meal has a high glycemic load of 26.6. Swapping white bread with chapati reduces the GL to 19.0, which is a 28.6% reduction. This swap is recommended.\", \"recommended_swap\": {\"replace\": \"white bread\", \"with\": \"chapati\"}}}",
+      "action": "done",
+      "argument": {
+        "status": "complete",
+        "answer": "The meal has a high glycemic load of 26.6. Swapping white bread with chapati reduces the GL to 19.0, which is a 28.6% reduction. This swap is recommended.",
+        "recommended_swap": {
+          "replace": "white bread",
+          "with": "chapati"
+        }
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": "Accepted: meal GL came from calculate_gl and the recommended swap passed test_swap (28.6% lower).",
+      "check_result": true,
+      "state_update": "Python accepted evidence-based done.",
+      "continue_or_stop": "stop"
+    }
+  ]
+}
