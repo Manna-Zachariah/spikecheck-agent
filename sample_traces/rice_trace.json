@@ -1,0 +1,227 @@
+{
+  "goal": "Lunch: 150 g white rice, 150 g chicken breast and 250 ml orange juice.",
+  "model": "qwen3:8b",
+  "stop_reason": "success",
+  "final_answer": "Your meal has a high glycemic load. Swapping white rice with brown rice reduces the GL by 21.5%, making it a better choice.",
+  "verified_summary": "Meal glycemic load (calculated by Python):\n  - white rice, 150.0 g: carbs 42.0 g, GI 73.0, GL 30.7 (high)\n  - chicken breast, 150.0 g: carbs 0.0 g, GI none, GL 0.0 (low)\n  - orange juice, 250.0 g: carbs 25.0 g, GI 50.0, GL 12.5 (medium)\n  TOTAL GL: 43.2\nSwap tested: white rice -> brown rice (150.0 g): 43.2 -> 33.9, 21.5% lower, PASSED\nNote: an estimate from a small food table, not a prediction of blood sugar.",
+  "steps_used": 5,
+  "trace": [
+    {
+      "step": 1,
+      "raw_reply": "{\"action\": \"calculate_gl\", \"argument\": {\"items\": [{\"food\": \"white rice\", \"grams\": 150}, {\"food\": \"chicken breast\", \"grams\": 150}, {\"food\": \"orange juice\", \"grams\": 250}]}}",
+      "action": "calculate_gl",
+      "argument": {
+        "items": [
+          {
+            "food": "white rice",
+            "grams": 150
+          },
+          {
+            "food": "chicken breast",
+            "grams": 150
+          },
+          {
+            "food": "orange juice",
+            "grams": 250
+          }
+        ]
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Meal glycemic load is 43.2.",
+        "data": {
+          "items": [
+            {
+              "food": "white rice",
+              "grams": 150.0,
+              "gi": 73.0,
+              "carbs_g": 42.0,
+              "gl": 30.7,
+              "rating": "high",
+              "note": ""
+            },
+            {
+              "food": "chicken breast",
+              "grams": 150.0,
+              "gi": null,
+              "carbs_g": 0.0,
+              "gl": 0.0,
+              "rating": "low",
+              "note": "No GI value: almost no carbohydrate, so GL is counted as 0."
+            },
+            {
+              "food": "orange juice",
+              "grams": 250.0,
+              "gi": 50.0,
+              "carbs_g": 25.0,
+              "gl": 12.5,
+              "rating": "medium",
+              "note": ""
+            }
+          ],
+          "total_gl": 43.2,
+          "total_carbs_g": 67.0,
+          "problems": [],
+          "rating": "high"
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 2,
+      "raw_reply": "{\"action\": \"find_alternatives\", \"argument\": {\"food\": \"white rice\"}}",
+      "action": "find_alternatives",
+      "argument": {
+        "food": "white rice"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Found 5 lower-GI alternatives, closest first.",
+        "data": {
+          "food": "white rice",
+          "category": "grain",
+          "alternatives": [
+            {
+              "food": "brown rice",
+              "gi": 68.0,
+              "carbs_per_100g": 21.0,
+              "serving_g": 150.0
+            },
+            {
+              "food": "quinoa",
+              "gi": 53.0,
+              "carbs_per_100g": 18.0,
+              "serving_g": 150.0
+            },
+            {
+              "food": "white spaghetti",
+              "gi": 49.0,
+              "carbs_per_100g": 29.0,
+              "serving_g": 150.0
+            },
+            {
+              "food": "whole wheat spaghetti",
+              "gi": 48.0,
+              "carbs_per_100g": 23.0,
+              "serving_g": 150.0
+            },
+            {
+              "food": "pearl barley",
+              "gi": 28.0,
+              "carbs_per_100g": 24.0,
+              "serving_g": 150.0
+            }
+          ]
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 3,
+      "raw_reply": "{\"action\": \"test_swap\", \"argument\": {\"items\": [{\"food\": \"white rice\", \"grams\": 150}, {\"food\": \"chicken breast\", \"grams\": 150}, {\"food\": \"orange juice\", \"grams\": 250}, {\"food\": \"brown rice\", \"grams\": 150}], \"replace\": \"white rice\", \"with\": \"brown rice\"}}",
+      "action": "test_swap",
+      "argument": {
+        "items": [
+          {
+            "food": "white rice",
+            "grams": 150
+          },
+          {
+            "food": "chicken breast",
+            "grams": 150
+          },
+          {
+            "food": "orange juice",
+            "grams": 250
+          },
+          {
+            "food": "brown rice",
+            "grams": 150
+          }
+        ],
+        "replace": "white rice",
+        "with": "brown rice"
+      },
+      "parse_ok": true,
+      "validation_ok": false,
+      "observation": "VALIDATION ERROR: test_swap items must be exactly the meal from calculate_gl (same foods and grams). Do not add the new food to items; put it only in \"with\".",
+      "check_result": null,
+      "state_update": "Invalid proposal sent back to model.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 4,
+      "raw_reply": "{\"action\": \"test_swap\", \"argument\": {\"items\": [{\"food\": \"white rice\", \"grams\": 150}, {\"food\": \"chicken breast\", \"grams\": 150}, {\"food\": \"orange juice\", \"grams\": 250}], \"replace\": \"white rice\", \"with\": \"brown rice\"}}",
+      "action": "test_swap",
+      "argument": {
+        "items": [
+          {
+            "food": "white rice",
+            "grams": 150
+          },
+          {
+            "food": "chicken breast",
+            "grams": 150
+          },
+          {
+            "food": "orange juice",
+            "grams": 250
+          }
+        ],
+        "replace": "white rice",
+        "with": "brown rice"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "Swap PASSED: meal GL goes from 43.2 to 33.9 (21.5% lower, target 20%).",
+        "data": {
+          "replace": "white rice",
+          "with": "brown rice",
+          "with_grams": 150.0,
+          "grams_note": "Used the table serving size for brown rice.",
+          "before_total_gl": 43.2,
+          "after_total_gl": 33.9,
+          "reduction": 9.3,
+          "reduction_percent": 21.5,
+          "target_percent": 20,
+          "passed": true,
+          "new_item_gl": 21.4,
+          "new_item_rating": "high",
+          "new_item_is_low": false
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 5,
+      "raw_reply": "{\"action\": \"done\", \"argument\": {\"status\": \"complete\", \"answer\": \"Your meal has a high glycemic load. Swapping white rice with brown rice reduces the GL by 21.5%, making it a better choice.\", \"recommended_swap\": {\"replace\": \"white rice\", \"with\": \"brown rice\"}}}",
+      "action": "done",
+      "argument": {
+        "status": "complete",
+        "answer": "Your meal has a high glycemic load. Swapping white rice with brown rice reduces the GL by 21.5%, making it a better choice.",
+        "recommended_swap": {
+          "replace": "white rice",
+          "with": "brown rice"
+        }
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": "Accepted: meal GL came from calculate_gl and the recommended swap passed test_swap (21.5% lower).",
+      "check_result": true,
+      "state_update": "Python accepted evidence-based done.",
+      "continue_or_stop": "stop"
+    }
+  ]
+}

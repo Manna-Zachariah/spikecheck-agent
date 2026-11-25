@@ -1,0 +1,34 @@
+name,aliases,category,gi,carbs_per_100g,serving_g,note
+white rice,rice|boiled white rice|jasmine rice,grain,73,28,150,cooked
+brown rice,boiled brown rice,grain,68,21,150,cooked
+quinoa,,grain,53,18,150,cooked
+white spaghetti,spaghetti|pasta|white pasta,grain,49,29,150,cooked
+whole wheat spaghetti,whole wheat pasta|wholemeal pasta,grain,48,23,150,cooked
+pearl barley,barley,grain,28,24,150,cooked
+white bread,bread|white toast,bread,75,46,60,about 2 slices per serving
+whole wheat bread,wholemeal bread|brown bread,bread,74,37,60,about 2 slices per serving
+chapati,roti|chapatti,bread,52,42,60,
+corn tortilla,tortilla,bread,46,38,50,
+cornflakes,corn flakes,breakfast_cereal,81,81,30,dry
+instant oat porridge,instant oats|instant oatmeal,breakfast_cereal,79,10,250,cooked with water
+rolled oat porridge,oatmeal|porridge|rolled oats,breakfast_cereal,55,10,250,cooked with water
+boiled potato,potato|potatoes,starchy_vegetable,78,18,150,
+french fries,fries|chips,starchy_vegetable,63,37,120,
+sweet potato,boiled sweet potato,starchy_vegetable,63,15,150,
+watermelon,,fruit,76,7,150,
+pineapple,,fruit,59,12,120,
+banana,,fruit,51,20,120,
+mango,,fruit,51,13,120,
+orange,,fruit,43,9,130,
+apple,,fruit,36,11,150,
+cola,soft drink|soda,drink,59,11,250,1 ml counted as 1 g
+orange juice,,drink,50,10,250,1 ml counted as 1 g
+apple juice,,drink,41,11,250,1 ml counted as 1 g
+whole milk,milk|full fat milk,drink,39,5,250,1 ml counted as 1 g
+lentils,boiled lentils,legume,32,12,150,cooked
+chickpeas,boiled chickpeas|garbanzo beans,legume,28,20,150,cooked
+kidney beans,boiled kidney beans,legume,24,16,150,cooked
+chicken breast,chicken|grilled chicken,protein,,0,150,no GI value: almost no carbohydrate
+egg,eggs|boiled egg,protein,,1,50,no GI value: almost no carbohydrate
+cheddar cheese,cheese|cheddar,protein,,1,30,no GI value: almost no carbohydrate
+broccoli,,vegetable,,4,100,no GI value: very little carbohydrate

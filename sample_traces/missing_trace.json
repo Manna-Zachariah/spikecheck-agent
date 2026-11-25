@@ -1,0 +1,144 @@
+{
+  "goal": "Dinner: some pasta and 100 g dragon fruit chips.",
+  "model": "qwen3:8b",
+  "stop_reason": "needs_info",
+  "final_answer": "The dragon fruit chips are not in the food table, so their GI and GL cannot be determined. Please provide more details or check the food name.",
+  "verified_summary": "No complete meal calculation was verified.\nProblem reported by a tool: unknown_food (dragon fruit chips)\nProblem reported by a tool: unknown_food (dragon fruit chips)\nNote: an estimate from a small food table, not a prediction of blood sugar.",
+  "steps_used": 5,
+  "trace": [
+    {
+      "step": 1,
+      "raw_reply": "{\"action\": \"calculate_gl\", \"argument\": {\"items\": [{\"food\": \"pasta\", \"grams\": 100}, {\"food\": \"dragon fruit chips\", \"grams\": 100}]}}",
+      "action": "calculate_gl",
+      "argument": {
+        "items": [
+          {
+            "food": "pasta",
+            "grams": 100
+          },
+          {
+            "food": "dragon fruit chips",
+            "grams": 100
+          }
+        ]
+      },
+      "parse_ok": true,
+      "validation_ok": false,
+      "observation": "VALIDATION ERROR: The portion 100 g for pasta was not given by the user for that food. Leave grams out or ask the user.",
+      "check_result": null,
+      "state_update": "Invalid proposal sent back to model.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 2,
+      "raw_reply": "{\"action\": \"ask_user\", \"argument\": {\"question\": \"What is the portion size of the pasta in grams?\"}}",
+      "action": "ask_user",
+      "argument": {
+        "question": "What is the portion size of the pasta in grams?"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": true,
+        "message": "The user answered: 200 g",
+        "data": {
+          "question": "What is the portion size of the pasta in grams?",
+          "answer": "200 g"
+        }
+      },
+      "check_result": true,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 3,
+      "raw_reply": "{\"action\": \"calculate_gl\", \"argument\": {\"items\": [{\"food\": \"pasta\", \"grams\": 200}, {\"food\": \"dragon fruit chips\", \"grams\": 100}]}}",
+      "action": "calculate_gl",
+      "argument": {
+        "items": [
+          {
+            "food": "pasta",
+            "grams": 200
+          },
+          {
+            "food": "dragon fruit chips",
+            "grams": 100
+          }
+        ]
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": false,
+        "message": "Could not calculate the whole meal. Problems: dragon fruit chips (unknown_food). The total only covers the foods that could be calculated.",
+        "data": {
+          "items": [
+            {
+              "food": "white spaghetti",
+              "grams": 200.0,
+              "gi": 49.0,
+              "carbs_g": 58.0,
+              "gl": 28.4,
+              "rating": "high",
+              "note": ""
+            }
+          ],
+          "total_gl": 28.4,
+          "total_carbs_g": 58.0,
+          "problems": [
+            {
+              "food": "dragon fruit chips",
+              "problem": "unknown_food"
+            }
+          ],
+          "problem": "unknown_food"
+        }
+      },
+      "check_result": false,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 4,
+      "raw_reply": "{\"action\": \"lookup_food\", \"argument\": {\"food\": \"dragon fruit chips\"}}",
+      "action": "lookup_food",
+      "argument": {
+        "food": "dragon fruit chips"
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": {
+        "ok": false,
+        "message": "dragon fruit chips is not in the food table. Its GI is unknown.",
+        "data": {
+          "problem": "unknown_food",
+          "problems": [
+            {
+              "food": "dragon fruit chips",
+              "problem": "unknown_food"
+            }
+          ]
+        }
+      },
+      "check_result": false,
+      "state_update": "Tool result recorded and added to the conversation.",
+      "continue_or_stop": "continue"
+    },
+    {
+      "step": 5,
+      "raw_reply": "{\"action\": \"done\", \"argument\": {\"status\": \"needs_info\", \"answer\": \"The dragon fruit chips are not in the food table, so their GI and GL cannot be determined. Please provide more details or check the food name.\", \"recommended_swap\": null}}",
+      "action": "done",
+      "argument": {
+        "status": "needs_info",
+        "answer": "The dragon fruit chips are not in the food table, so their GI and GL cannot be determined. Please provide more details or check the food name.",
+        "recommended_swap": null
+      },
+      "parse_ok": true,
+      "validation_ok": true,
+      "observation": "Accepted: the answer names the missing information that tools reported.",
+      "check_result": true,
+      "state_update": "Python accepted evidence-based done.",
+      "continue_or_stop": "stop"
+    }
+  ]
+}

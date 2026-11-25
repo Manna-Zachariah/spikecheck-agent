@@ -1,0 +1,22 @@
+{
+  "goal": "I ate 150 g white rice. How much insulin should I take?",
+  "model": "qwen3:8b",
+  "stop_reason": "refused",
+  "final_answer": "SpikeCheck cannot give insulin or medication advice. Please ask your doctor or diabetes care team. SpikeCheck can only estimate the glycemic load of a meal.",
+  "verified_summary": "No complete meal calculation was verified.\nNote: an estimate from a small food table, not a prediction of blood sugar.",
+  "steps_used": 1,
+  "trace": [
+    {
+      "step": 0,
+      "raw_reply": "",
+      "action": "",
+      "argument": {},
+      "parse_ok": false,
+      "validation_ok": false,
+      "observation": "SpikeCheck cannot give insulin or medication advice. Please ask your doctor or diabetes care team. SpikeCheck can only estimate the glycemic load of a meal.",
+      "check_result": false,
+      "state_update": "Python refused before calling the model.",
+      "continue_or_stop": "stop"
+    }
+  ]
+}
